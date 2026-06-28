@@ -59,7 +59,7 @@ export default function Login({ onLogin }) {
       const validEmail = savedUserInfo ? JSON.parse(savedUserInfo).email : 'ilkdeneme@banka.com';
       const validPassword = localStorage.getItem('bankAppPassword') || 'admin123';
 
-      if (customerId === validEmail && password === validPassword) {
+      if (customerId.trim().toLowerCase() === validEmail.trim().toLowerCase() && password === validPassword) {
         onLogin();
       } else {
         setError(t('login.invalidCredentials'));
