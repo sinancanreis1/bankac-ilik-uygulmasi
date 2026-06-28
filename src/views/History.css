@@ -84,7 +84,7 @@
 
 .history-item:hover {
   transform: scale(1.02);
-  background: rgba(26, 31, 46, 0.9);
+  background: #F9FAFB;
 }
 
 .tx-info {
