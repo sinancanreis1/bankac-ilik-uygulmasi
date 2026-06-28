@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { User, Shield, Bell, Settings, LogOut, ChevronRight, HelpCircle, Edit2, Camera, ArrowLeft } from 'lucide-react';
 import './Profile.css';
+import { useLanguage } from '../LanguageContext';
 
 export default function Profile({ onLogout }) {
+  const { t, changeLanguage, changeCurrency } = useLanguage();
   const [activeSection, setActiveSection] = useState('main');
   const [isEditing, setIsEditing] = useState(false);
   const [userInfo, setUserInfo] = useState(() => {
@@ -17,10 +19,26 @@ export default function Profile({ onLogout }) {
       avatar: 'https://i.pravatar.cc/150?u=sinancanreis'
     };
   });
+  const [passwords, setPasswords] = useState({ old: '', new: '', newConfirm: '' });
 
   useEffect(() => {
     localStorage.setItem('bankAppUserInfo', JSON.stringify(userInfo));
   }, [userInfo]);
+
+  const [appSettings, setAppSettings] = useState(() => {
+    const saved = localStorage.getItem('bankAppSettingsData');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+    return {
+      language: 'Türkçe',
+      currency: 'TRY (₺)'
+    };
+  });
+
+  useEffect(() => {
+    localStorage.setItem('bankAppSettingsData', JSON.stringify(appSettings));
+  }, [appSettings]);
 
   const fileInputRef = useRef(null);
 
@@ -51,7 +69,7 @@ export default function Profile({ onLogout }) {
   const renderMainProfile = () => (
     <>
       <header className="page-header profile-header">
-        <h2 className="page-title">Profilim</h2>
+        <h2 className="page-title">{t('profile.title')}</h2>
       </header>
 
       <div className="profile-user-card glass-panel">
@@ -76,35 +94,35 @@ export default function Profile({ onLogout }) {
         <div className="profile-details">
           {isEditing ? (
             <div className="edit-form">
-              <label>Ad Soyad</label>
+              <label>{t('profile.name')}</label>
               <input 
                 type="text" 
                 value={userInfo.name} 
                 onChange={e => setUserInfo({...userInfo, name: e.target.value})}
                 className="profile-input"
               />
-              <label>Telefon Numarası</label>
+              <label>{t('profile.phone')}</label>
               <input 
                 type="tel" 
                 value={userInfo.phone} 
                 onChange={e => setUserInfo({...userInfo, phone: e.target.value})}
                 className="profile-input"
               />
-              <label>E-Posta Adresi</label>
+              <label>{t('profile.email')}</label>
               <input 
                 type="email" 
                 value={userInfo.email} 
                 onChange={e => setUserInfo({...userInfo, email: e.target.value})}
                 className="profile-input"
               />
-              <button type="button" onClick={handleSave} className="save-btn">Bilgileri Kaydet</button>
+              <button type="button" onClick={handleSave} className="save-btn">{t('profile.saveBtn')}</button>
             </div>
           ) : (
             <>
               <h3>{userInfo.name}</h3>
               <p>{userInfo.phone}</p>
               <p className="email-text">{userInfo.email}</p>
-              <span className="badge-premium">Bireysel Müşteri</span>
+              <span className="badge-premium">{t('profile.customerType')}</span>
             </>
           )}
         </div>
@@ -117,35 +135,35 @@ export default function Profile({ onLogout }) {
       </div>
 
       <div className="profile-menu">
-        <div className="menu-group-title">Hesap Yönetimi</div>
+        <div className="menu-group-title">{t('profile.accountManagement')}</div>
         <div className="menu-list glass-panel">
           <button type="button" className="menu-item" onClick={() => setIsEditing(true)}>
             <div className="menu-icon-wrapper"><User size={20} /></div>
-            <span>Kişisel Bilgilerim</span>
+            <span>{t('profile.personalInfo')}</span>
             <ChevronRight size={20} className="menu-chevron" />
           </button>
           <button type="button" className="menu-item" onClick={() => setActiveSection('security')}>
             <div className="menu-icon-wrapper"><Shield size={20} /></div>
-            <span>Güvenlik ve Şifre</span>
+            <span>{t('profile.security')}</span>
             <ChevronRight size={20} className="menu-chevron" />
           </button>
           <button type="button" className="menu-item" onClick={() => setActiveSection('notifications')}>
             <div className="menu-icon-wrapper"><Bell size={20} /></div>
-            <span>Bildirim Ayarları</span>
+            <span>{t('profile.notifications')}</span>
             <ChevronRight size={20} className="menu-chevron" />
           </button>
         </div>
 
-        <div className="menu-group-title">Diğer</div>
+        <div className="menu-group-title">{t('profile.other')}</div>
         <div className="menu-list glass-panel">
           <button type="button" className="menu-item" onClick={() => setActiveSection('settings')}>
             <div className="menu-icon-wrapper"><Settings size={20} /></div>
-            <span>Uygulama Ayarları</span>
+            <span>{t('profile.appSettings')}</span>
             <ChevronRight size={20} className="menu-chevron" />
           </button>
           <button type="button" className="menu-item" onClick={() => setActiveSection('help')}>
             <div className="menu-icon-wrapper"><HelpCircle size={20} /></div>
-            <span>Yardım ve Destek</span>
+            <span>{t('profile.helpSupport')}</span>
             <ChevronRight size={20} className="menu-chevron" />
           </button>
         </div>
@@ -153,7 +171,7 @@ export default function Profile({ onLogout }) {
 
       <button type="button" className="logout-btn glass-panel" onClick={onLogout}>
         <LogOut size={20} />
-        <span>Güvenli Çıkış Yap</span>
+        <span>{t('profile.logout')}</span>
       </button>
 
       <div className="app-version">
@@ -162,31 +180,65 @@ export default function Profile({ onLogout }) {
     </>
   );
 
+  const handlePasswordChange = () => {
+    const currentPass = localStorage.getItem('bankAppPassword') || 'admin123';
+    if (passwords.old !== currentPass) {
+      alert(t('profile.sec.wrongOld') || 'Mevcut şifreniz yanlış!');
+      return;
+    }
+    if (passwords.new !== passwords.newConfirm) {
+      alert(t('profile.sec.mismatch') || 'Yeni şifreler eşleşmiyor!');
+      return;
+    }
+    if (passwords.new.length < 6) {
+      alert(t('profile.sec.tooShort') || 'Yeni şifre en az 6 karakter olmalıdır!');
+      return;
+    }
+    localStorage.setItem('bankAppPassword', passwords.new);
+    setPasswords({ old: '', new: '', newConfirm: '' });
+    alert(t('profile.sec.success') || 'Şifreniz başarıyla güncellendi! Yeni şifrenizle giriş yapabilirsiniz.');
+  };
+
   const renderSecurity = () => (
-    <div className="sub-section-container">
+    <div className="sub-section-container pb-8">
       <header className="page-header">
         <button type="button" className="back-btn" onClick={() => setActiveSection('main')}>
           <ArrowLeft size={24} />
         </button>
-        <h2 className="page-title">Güvenlik ve Şifre</h2>
+        <h2 className="page-title">{t('profile.security')}</h2>
         <div style={{width: 24}}></div>
       </header>
       <div className="glass-panel p-4">
-        <h3 className="mb-3 text-lg font-semibold">Şifre Değiştirme</h3>
+        <h3 className="mb-3 text-lg font-semibold">{t('profile.sec.title') || 'Şifre Değiştirme'}</h3>
         <div className="edit-form mt-4">
-          <label>Mevcut Şifre</label>
-          <input type="password" placeholder="Mevcut Şifrenizi Giriniz" className="profile-input" />
-          <label className="mt-2">Yeni Şifre</label>
-          <input type="password" placeholder="Yeni Şifrenizi Giriniz" className="profile-input" />
-          <label className="mt-2">Yeni Şifre (Tekrar)</label>
-          <input type="password" placeholder="Yeni Şifrenizi Tekrar Giriniz" className="profile-input" />
-          <button type="button" className="save-btn mt-4" onClick={() => alert('Şifreniz güncellendi!')}>Şifreyi Güncelle</button>
+          <label>{t('profile.sec.oldPass') || 'Mevcut Şifre'}</label>
+          <input 
+            type="password" 
+            placeholder={t('profile.sec.oldPassPlaceholder') || 'Mevcut Şifrenizi Giriniz'} 
+            className="profile-input" 
+            value={passwords.old}
+            onChange={e => setPasswords({...passwords, old: e.target.value})}
+          />
+          <label className="mt-2">{t('profile.sec.newPass') || 'Yeni Şifre'}</label>
+          <input 
+            type="password" 
+            placeholder={t('profile.sec.newPassPlaceholder') || 'Yeni Şifrenizi Giriniz'} 
+            className="profile-input" 
+            value={passwords.new}
+            onChange={e => setPasswords({...passwords, new: e.target.value})}
+          />
+          <label className="mt-2">{t('profile.sec.newPassConfirm') || 'Yeni Şifre (Tekrar)'}</label>
+          <input 
+            type="password" 
+            placeholder={t('profile.sec.newPassConfirmPlaceholder') || 'Yeni Şifrenizi Tekrar Giriniz'} 
+            className="profile-input" 
+            value={passwords.newConfirm}
+            onChange={e => setPasswords({...passwords, newConfirm: e.target.value})}
+          />
+          <button type="button" className="save-btn mt-4" onClick={handlePasswordChange}>
+            {t('profile.sec.updateBtn') || 'Şifreyi Güncelle'}
+          </button>
         </div>
-      </div>
-      <div className="glass-panel p-4 mt-4">
-        <h3 className="text-lg font-semibold mb-2">İki Aşamalı Doğrulama</h3>
-        <p className="text-sm text-gray-500 mb-4">Hesabınıza giriş yaparken telefonunuza SMS gönderilerek doğrulama yapılır.</p>
-        <button type="button" className="save-btn" style={{background: '#007940'}}>Aktif (Kapatmak İçin Tıklayın)</button>
       </div>
     </div>
   );
@@ -220,23 +272,41 @@ export default function Profile({ onLogout }) {
   );
 
   const renderSettings = () => (
-    <div className="sub-section-container">
+    <div className="sub-section-container pb-8">
       <header className="page-header">
         <button type="button" className="back-btn" onClick={() => setActiveSection('main')}>
           <ArrowLeft size={24} />
         </button>
-        <h2 className="page-title">Uygulama Ayarları</h2>
+        <h2 className="page-title">{t('profile.set.title')}</h2>
         <div style={{width: 24}}></div>
       </header>
       <div className="glass-panel p-4">
-        <div className="edit-form">
-          <label>Dil Seçimi</label>
-          <select className="profile-input">
+        <div className="edit-form" style={{gap: 0}}>
+          <label style={{fontSize: '0.85rem', color: '#6b7280', marginBottom: '6px', display: 'block'}}>{t('profile.set.lang')}</label>
+          <select 
+            className="profile-input" 
+            style={{marginBottom: '24px'}}
+            value={appSettings.language}
+            onChange={e => {
+              const newLang = e.target.value;
+              setAppSettings({...appSettings, language: newLang});
+              changeLanguage(newLang);
+            }}
+          >
             <option>Türkçe</option>
             <option>English</option>
           </select>
-          <label className="mt-4">Para Birimi Gösterimi</label>
-          <select className="profile-input">
+          
+          <label style={{fontSize: '0.85rem', color: '#6b7280', marginBottom: '6px', display: 'block'}}>{t('profile.set.currency')}</label>
+          <select 
+            className="profile-input"
+            value={appSettings.currency}
+            onChange={e => {
+              const newCurr = e.target.value;
+              setAppSettings({...appSettings, currency: newCurr});
+              changeCurrency(newCurr);
+            }}
+          >
             <option>TRY (₺)</option>
             <option>USD ($)</option>
             <option>EUR (€)</option>

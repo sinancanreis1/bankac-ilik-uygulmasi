@@ -6,8 +6,10 @@ import Dashboard from './views/Dashboard';
 import Transfer from './views/Transfer';
 import TransactionsHistory from './views/History';
 import Profile from './views/Profile';
+import { useLanguage } from './LanguageContext';
 
 function App() {
+  const { t } = useLanguage();
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('bankAppLoggedIn') === 'true';
   });
@@ -59,32 +61,36 @@ function App() {
       {/* Bottom Navigation */}
       <nav className="bottom-nav glass-panel">
         <button 
+          type="button"
           className={`nav-item ${currentView === 'dashboard' ? 'active' : ''}`}
           onClick={() => setCurrentView('dashboard')}
         >
           <Home size={24} />
-          <span>Ana Sayfa</span>
+          <span>{t('nav.home')}</span>
         </button>
         <button 
+          type="button"
           className={`nav-item ${currentView === 'transfer' ? 'active' : ''}`}
           onClick={() => setCurrentView('transfer')}
         >
           <Send size={24} />
-          <span>Transfer</span>
+          <span>{t('nav.transfer')}</span>
         </button>
         <button 
+          type="button"
           className={`nav-item ${currentView === 'history' ? 'active' : ''}`}
           onClick={() => setCurrentView('history')}
         >
           <History size={24} />
-          <span>Geçmiş</span>
+          <span>{t('nav.history')}</span>
         </button>
         <button 
+          type="button"
           className={`nav-item ${currentView === 'profile' ? 'active' : ''}`}
           onClick={() => setCurrentView('profile')}
         >
           <User size={24} />
-          <span>Profil</span>
+          <span>{t('nav.profile')}</span>
         </button>
       </nav>
     </div>

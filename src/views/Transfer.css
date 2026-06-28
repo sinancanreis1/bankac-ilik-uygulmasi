@@ -158,3 +158,69 @@ input[type=number] {
   color: var(--text-muted);
   font-size: 1.1rem;
 }
+
+/* Form Styles Added for Translations Refactor */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.transfer-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  font-size: 1rem;
+  color: var(--text-main);
+  outline: none;
+  transition: all 0.3s;
+}
+
+.transfer-input:focus {
+  border-color: var(--primary-accent);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(252, 176, 0, 0.1);
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: #999;
+}
+
+.input-with-icon .transfer-input {
+  padding-left: 42px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary-accent);
+  color: #fff;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  background: #e6a000;
+}

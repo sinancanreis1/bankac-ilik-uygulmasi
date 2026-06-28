@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ChevronLeft, SendHorizontal } from 'lucide-react';
+import { ArrowLeft, Search, SendHorizontal } from 'lucide-react';
 import './Transfer.css';
+import { useLanguage } from '../LanguageContext';
 
 const recentContacts = [
   { id: 1, name: 'Ayşe Y.', avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026024d' },
@@ -10,7 +11,10 @@ const recentContacts = [
 ];
 
 export default function Transfer({ onBack }) {
+  const { t, formatCurrency, currency } = useLanguage();
   const [amount, setAmount] = useState('');
+  const [recipient, setRecipient] = useState('');
+  const [desc, setDesc] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleTransfer = (e) => {
@@ -29,25 +33,25 @@ export default function Transfer({ onBack }) {
     return (
       <div className="view-container success-view">
         <div className="success-icon">✓</div>
-        <h2>Transfer Başarılı!</h2>
-        <p>${amount} gönderildi.</p>
+        <h2>{t('transfer.success')}</h2>
+        <p>{formatCurrency(amount)} {t('transfer.sent')}</p>
       </div>
     );
   }
 
   return (
-    <div className="view-container">
-      <header className="page-header">
-        <button className="icon-btn glass-panel" onClick={onBack}>
-          <ChevronLeft size={24} />
+    <div className="view-container transfer-view">
+      <header className="page-header transfer-header">
+        <button type="button" className="back-btn" onClick={onBack}>
+          <ArrowLeft size={24} />
         </button>
-        <h2 className="page-title">Para Gönder</h2>
-        <div style={{ width: 44 }}></div> {/* Spacer for alignment */}
+        <h2 className="page-title">{t('transfer.title')}</h2>
+        <div style={{ width: 24 }}></div>
       </header>
 
       {/* Recent Contacts */}
       <div className="contacts-section">
-        <h3 className="section-title">Hızlı Gönder</h3>
+        <h3 className="section-title">{t('transfer.quick')}</h3>
         <div className="contacts-list">
           <div className="contact-item add-new glass-panel">
             <span>+</span>
@@ -63,30 +67,47 @@ export default function Transfer({ onBack }) {
 
       {/* Transfer Form */}
       <form onSubmit={handleTransfer} className="transfer-form glass-panel">
-        <div className="amount-container">
-          <span className="currency">$</span>
+        <div className="form-group">
+          <label>{t('transfer.to')}</label>
+          <div className="input-with-icon">
+            <Search size={20} className="input-icon" />
+            <input 
+              type="text" 
+              className="transfer-input"
+              placeholder={t('transfer.recipient')}
+              value={recipient}
+              onChange={e => setRecipient(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>{t('transfer.amount')}</label>
+          <div className="amount-container">
+            <span className="currency">{currency === 'USD ($)' ? '$' : currency === 'EUR (€)' ? '€' : '₺'}</span>
+            <input 
+              type="number" 
+              className="amount-input"
+              placeholder="0.00"
+              value={amount}
+              onChange={e => setAmount(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>{t('transfer.desc')}</label>
           <input 
-            type="number" 
-            className="amount-input" 
-            placeholder="0.00"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            autoFocus
+            type="text" 
+            className="transfer-input"
+            placeholder={t('transfer.descPlaceholder')}
+            value={desc}
+            onChange={e => setDesc(e.target.value)}
           />
         </div>
 
-        <div className="input-group">
-          <label className="input-label">Alıcı IBAN veya İsim</label>
-          <input type="text" className="premium-input" placeholder="TR00 0000..." />
-        </div>
-
-        <div className="input-group">
-          <label className="input-label">Açıklama (İsteğe Bağlı)</label>
-          <input type="text" className="premium-input" placeholder="Kira ödemesi vb." />
-        </div>
-
-        <button type="submit" className="primary-btn">
-          <span>Gönder</span>
+        <button type="submit" className="submit-btn">
+          <span>{t('transfer.sendBtn')}</span>
           <SendHorizontal size={20} />
         </button>
       </form>
