@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Home, Send, History, User } from 'lucide-react';
 import './App.css';
 import Login from './views/Login';
 import Dashboard from './views/Dashboard';
 import Transfer from './views/Transfer';
 import TransactionsHistory from './views/History';
+import Profile from './views/Profile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('bankAppLoggedIn') === 'true';
   });
-  const [currentView, setCurrentView] = useState('dashboard');
+  const [currentView, setCurrentView] = useState(() => {
+    return localStorage.getItem('bankAppCurrentView') || 'dashboard';
+  });
+  
+  useEffect(() => {
+    localStorage.setItem('bankAppCurrentView', currentView);
+  }, [currentView]);
   
   const handleLoginSuccess = () => {
     localStorage.setItem('bankAppLoggedIn', 'true');
@@ -19,6 +26,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('bankAppLoggedIn');
+    localStorage.removeItem('bankAppCurrentView');
     setIsLoggedIn(false);
     setCurrentView('dashboard');
   };
@@ -35,6 +43,8 @@ function App() {
         return <Transfer onBack={() => setCurrentView('dashboard')} />;
       case 'history':
         return <TransactionsHistory onBack={() => setCurrentView('dashboard')} />;
+      case 'profile':
+        return <Profile onLogout={handleLogout} />;
       default:
         return <Dashboard onViewChange={setCurrentView} />;
     }
@@ -70,11 +80,11 @@ function App() {
           <span>Geçmiş</span>
         </button>
         <button 
-          className="nav-item"
-          onClick={handleLogout}
+          className={`nav-item ${currentView === 'profile' ? 'active' : ''}`}
+          onClick={() => setCurrentView('profile')}
         >
           <User size={24} />
-          <span>Çıkış Yap</span>
+          <span>Profil</span>
         </button>
       </nav>
     </div>
