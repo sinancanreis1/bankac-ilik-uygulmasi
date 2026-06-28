@@ -1,16 +1,36 @@
-# React + Vite
+# Mobil Bankacılık Uygulaması Geliştirme Serüveni 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Bu proje, bir Full-Stack Web Geliştiricisi olarak mobil ve finans/bankacılık alanındaki yeteneklerimi geliştirmek, yeni teknolojiler denemek ve bu alanda uzmanlaşmak amacıyla başlattığım kişisel bir öğrenme ve gelişim projesidir.
 
-Currently, two official plugins are available:
+## Projenin Amacı 🎯
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Bankacılık ve finans uygulamaları; kusursuz bir kullanıcı deneyimi (UX), yüksek performans, güvenlik ve ince düşünülmüş mikro-etkileşimler gerektirir. Bu depo, bu zorlu gereksinimleri modern web teknolojileri ile (Progressive Web App formatında) mobil ortama en estetik biçimde taşıma denemelerimi içermektedir.
 
-## React Compiler
+- **Kullanıcı Arayüzü (UI) Pratikleri:** Premium hissettiren modern tasarım, karanlık tema (Dark Mode) uyumu ve cam efektleri (Glassmorphism) üzerine yoğun çalışmalar.
+- **Mimari Gelişim:** Vite ve React kullanılarak performanslı, modüler ve ölçeklenebilir bir yapı inşa edilmesi.
+- **Finansal UX Deneyimi:** Para transferi ekranları, dinamik bakiye kartları, kullanıcı dostu işlem geçmişi gibi bankacılık uygulamalarının olmazsa olmaz bileşenlerinin kurgulanması.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Kullanılan Teknolojiler 🛠️
 
-## Expanding the Oxlint configuration
+- **Framework:** React.js (Vite ile hızlı derleme)
+- **Stil (Styling):** Vanilla CSS (Özel animasyonlar, CSS değişkenleri ve native hissi veren UI bileşenleri)
+- **İkonografi:** Lucide React
+- **Yaklaşım:** Mobil Öncelikli (Mobile-First) tasarım ve PWA (Progressive Web App) standartları.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Geliştirilen Özellikler (MVP) ✨
+
+1. **Dashboard (Ana Sayfa):** Toplam bakiye kartı, hızlı işlemler menüsü ve son işlemler özeti.
+2. **Para Transferi:** Etkileşimli miktar girişi, avatarlı hızlı gönderim rehberi ve başarılı işlem animasyonu.
+3. **İşlem Geçmişi (History):** Gelen/Giden aylık bütçe özeti ve kategorize edilmiş detaylı harcama listesi.
+
+## Gelecek Hedefleri 🚀
+
+Bu proje, bankacılık alanındaki gelişimime paralel olarak büyümeye devam edecektir. Gelecekte eklenmesi planlanan bazı yetenekler:
+- Global State Management (Zustand veya Redux) mimarisi.
+- Gerçek zamanlı veri akışı için Backend / BaaS (Supabase veya Firebase) entegrasyonu.
+- Kullanıcı yetkilendirme (Authentication) ve güvenlik simülasyonları.
+- React Router DOM ile daha kompleks sayfa hiyerarşisi ve rotalama.
+
+---
+
+*Fintek ve mobil alandaki gelişim sürecimi yansıtan bu projeyi incelediğiniz için teşekkürler!* ⭐
