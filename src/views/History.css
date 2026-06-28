@@ -1,0 +1,110 @@
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 24px;
+}
+
+.search-icon {
+  color: var(--text-muted);
+  margin-right: 12px;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  width: 100%;
+  font-size: 1rem;
+  outline: none;
+  font-family: inherit;
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Monthly Summary */
+.monthly-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 16px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.summary-amount {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.summary-amount.success { color: var(--success-color); }
+.summary-amount.danger { color: var(--danger-color); }
+
+.summary-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--card-border);
+}
+
+/* History List */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.month-divider {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 20px;
+  transition: transform 0.2s;
+}
+
+.history-item:hover {
+  transform: scale(1.02);
+  background: rgba(26, 31, 46, 0.9);
+}
+
+.tx-info {
+  flex: 1;
+}
+
+.tx-info h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.tx-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+}
+
+.tx-meta .dot {
+  margin: 0 6px;
+  font-size: 1rem;
+}
