@@ -31,11 +31,11 @@ export default function Dashboard({ onViewChange }) {
             <h2 className="balance-amount">{formatCurrency(124500)}</h2>
             <div className="balance-accounts">
               <div className="account-pill">
-                <span className="acc-type">{t('dash.checkingAcc')}</span>
+                <span className="acc-type">{t('dash.checkingAcc')}: </span>
                 <span className="acc-amt">{formatCurrency(24500)}</span>
               </div>
               <div className="account-pill">
-                <span className="acc-type">{t('dash.investAcc')}</span>
+                <span className="acc-type">{t('dash.investAcc')}: </span>
                 <span className="acc-amt">{formatCurrency(100000)}</span>
               </div>
             </div>

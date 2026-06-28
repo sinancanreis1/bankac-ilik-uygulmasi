@@ -108,3 +108,26 @@
   margin: 0 6px;
   font-size: 1rem;
 }
+
+/* History Filters Added for Translation Refactor */
+.history-filters {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 24px;
+}
+
+.filter-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.filter-btn.active {
+  background: var(--primary-accent);
+  color: #fff;
+}

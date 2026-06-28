@@ -59,7 +59,7 @@ export default function History({ onBack }) {
       </div>
 
       {/* Monthly Summary */}
-      <div className="history-summary glass-panel">
+      <div className="monthly-summary glass-panel" style={{ padding: '20px' }}>
         <div className="summary-item">
           <span className="summary-label">{t('history.incoming')}</span>
           <span className="summary-amount success">+{formatCurrency(32500)}</span>

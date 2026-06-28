@@ -66,9 +66,11 @@ export const translations = {
     
     // History
     'history.title': 'İşlem Geçmişi',
+    'history.searchPlaceholder': 'İşlem ara...',
     'history.all': 'Tümü',
     'history.incoming': 'Gelen',
     'history.outgoing': 'Giden',
+    'history.june2026': 'Haziran 2026',
     
     // Profile
     'profile.title': 'Profilim',
@@ -195,9 +197,11 @@ export const translations = {
     
     // History
     'history.title': 'Transaction History',
+    'history.searchPlaceholder': 'Search transactions...',
     'history.all': 'All',
     'history.incoming': 'Incoming',
     'history.outgoing': 'Outgoing',
+    'history.june2026': 'June 2026',
     
     // Profile
     'profile.title': 'My Profile',
